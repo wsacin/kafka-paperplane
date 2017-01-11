@@ -43,7 +43,7 @@ notifier.send_notification('hello', 'ALERT', topic='foo')
 
 # Listen for notifications on registered topics
 for notification in notifier.poll_notifications():
-    print notification
+    print(notification)
 
 
 # Listen for raw Kafka messages (ConsumerRecord)
