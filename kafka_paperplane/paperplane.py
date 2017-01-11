@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 
 from kafka import KafkaProducer, KafkaConsumer
-from notification import Notification
+from .notification import Notification
 import json
 
 
@@ -23,15 +22,16 @@ class PaperPlane(object):
 
     def poll_notifications(self):
         for msg in self.consumer:
-            yield json.loads(msg.value)
+            yield json.loads(msg.value.decode('utf-8'))
+
+    def poll_raw_messages(self):
+        for msg in self.consumer:
+            yield msg
 
     def send_notification(
-            self, message, message_type,
-            topic='', persist=False):
+            self, message, message_type, topic=''):
 
-        payload = Notification.create(
-                message, message_type,
-                persist=(persist or self._persist_messages))
+        payload = Notification.create(message, message_type)
 
         if topic:
             self.producer.send(topic, message)

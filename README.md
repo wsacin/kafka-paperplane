@@ -1,7 +1,9 @@
 
-# Kafka Paperplane 
+# Kafka Paperplane
 
-Dockerized Apache Kafka and API (PaperPlane) to abstract Kafka's Consumer and Producer into one wrapper in a notificaiton system fashion.
+Dockerized Apache Kafka and API (PaperPlane) to abstract
+Kafka's Consumer and Producer into one wrapper in
+a notificaiton system fashion.
 
 ## Client API
 
@@ -42,4 +44,9 @@ notifier.send_notification('hello', 'ALERT', topic='foo')
 # Listen for notifications on registered topics
 for notification in notifier.poll_notifications():
     print notification
+
+
+# Listen for raw Kafka messages (ConsumerRecord)
+for notification in notifier.poll_raw_messages():
+    print(notification)
 ```
