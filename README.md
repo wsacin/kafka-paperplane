@@ -13,20 +13,19 @@ from kafka_paperplane import PaperPlane
 
 notifier = PaperPlane(
         broker_address=my.broker.ip.addr:9092,
-        receive_from=[
+        receive_from=[],
             # List of topics to subscribe to.
             # [] if client will only send.
-        ],
-        send_to=[
-            # List of target topics for
-            # messages sent from this notifier.
-            # [] if client will only receive.
-        ],
-        group_id='', # (optional) Notifiers with the
-                     # the same id will receive
-                     # in a  round-robin manner
+        send_to=[],
+            # List of target topics for messages sent from
+            # this notifier. [] if client will only receive.
+        group_id='',
+            # (Optional) Notifiers with the the same id will receive
+            # notifications in a round-robin manner.
         persist_messages=False,
-                # (Optional)
+            # (Optional) if True, received notifications
+            # will be persisted on a local instance of
+            # a given database.
     )
 
 
