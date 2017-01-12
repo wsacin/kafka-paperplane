@@ -1,6 +1,8 @@
 
 from kafka import KafkaProducer, KafkaConsumer
 from .notification import Notification
+from datetime import datetime as dt
+from datetime import timezone as tz
 import json
 
 
@@ -23,6 +25,8 @@ class PaperPlane(object):
     def poll_notifications(self):
         for msg in self.consumer:
             data = json.loads(msg.value.decode('utf-8'))
+            data['timestamp'] = dt.fromtimestamp(
+                    msg.timestamp / 1000, tz.utc)
             if self._database_strategy:
                 self._database_strategy.save_notification(data)
             yield data
