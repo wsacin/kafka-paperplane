@@ -11,18 +11,21 @@ class PaperPlane(object):
     """
     def __init__(
             self, broker_address, receive_from,
-            send_to, group_id='', persist_messages=False):
+            send_to, group_id='', database_strategy=None):
         self._broker_address = broker_address
         self._send_to = send_to
         self._receive_from = receive_from
         self._group_id = group_id
-        self._persist_messages = persist_messages
+        self._database_strategy = database_strategy
         self._consumer = None
         self._producer = None
 
     def poll_notifications(self):
         for msg in self.consumer:
-            yield json.loads(msg.value.decode('utf-8'))
+            data = json.loads(msg.value.decode('utf-8'))
+            if self._database_strategy:
+                self._database_strategy.save_notification(data)
+            yield data
 
     def poll_raw_messages(self):
         for msg in self.consumer:

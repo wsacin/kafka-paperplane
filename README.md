@@ -24,10 +24,11 @@ notifier = PaperPlane(
         group_id='',
             # (Optional) Notifiers with the the same id will receive
             # notifications in a round-robin manner.
-        persist_messages=False,
-            # (Optional) if True, received notifications
-            # will be persisted on a local instance of
-            # a given database.
+        database_strategy=None,
+            # (Optional) Object that dictates what
+            # storage backend which the notifications
+            # will be persisted. If None, PaperPlane will
+            # not persist.
     )
 
 
@@ -50,3 +51,19 @@ for notification in notifier.poll_notifications():
 for notification in notifier.poll_raw_messages():
     print(notification)
 ```
+
+
+#### Persistence
+from kafka_paperplane import PaperPlane
+from kafka_paperplane.persistence import MongoStrategy
+
+
+notifier = PaperPlane(
+        broker_address=my.broker.ip.addr:9092,
+        receive_from=['foo'],
+        send_to=['bar'],
+        database_strategy=MongoStrategy(),
+            # MongoStrategy with default configuration. this
+            # will create connections with a local instance
+            # of MongoDB.
+    )
