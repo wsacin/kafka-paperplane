@@ -54,6 +54,8 @@ for notification in notifier.poll_raw_messages():
 
 
 #### Persistence
+
+```python
 from kafka_paperplane import PaperPlane
 from kafka_paperplane.persistence import MongoStrategy
 
@@ -67,3 +69,4 @@ notifier = PaperPlane(
             # will create connections with a local instance
             # of MongoDB.
     )
+```
