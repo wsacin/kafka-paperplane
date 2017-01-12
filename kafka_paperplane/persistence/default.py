@@ -1,8 +1,8 @@
 
 class DefaultStrategy:
 
-    def __init__(self, connection_url):
-        self._url = connection_url
+    def __init__(self):
+        self._connection = None
 
     def save_notification(self, notification):
         raise NotImplementedError()

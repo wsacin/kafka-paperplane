@@ -10,7 +10,7 @@ class MongoStrategy(DefaultStrategy):
         self._connection_url = connection_url
         self._database = database
         self._collection = collection
-        self._connection = None
+        super().__init__()
 
     @property
     def connection(self):
