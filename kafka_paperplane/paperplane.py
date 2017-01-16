@@ -25,10 +25,12 @@ class PaperPlane(object):
     def poll_notifications(self):
         for msg in self.consumer:
             data = json.loads(msg.value.decode('utf-8'))
+            data['offset'] = msg.offset
+            if self._database_strategy:
+                data['timestamp'] = msg.timestamp
+                self._database_strategy.save_notification(data)
             data['timestamp'] = dt.fromtimestamp(
                     msg.timestamp / 1000, tz.utc)
-            if self._database_strategy:
-                self._database_strategy.save_notification(data)
             yield data
 
     def poll_raw_messages(self):
