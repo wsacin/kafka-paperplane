@@ -57,8 +57,7 @@ class PaperPlane(object):
 
         if not self._consumer:
             self._consumer = KafkaConsumer(**params)
-            for topic in self._receive_from:
-                self._consumer.subscribe(topic)
+            self._consumer.subscribe(self._receive_from)
         return self._consumer
 
     @property
