@@ -10,6 +10,8 @@ services:
             dockerfile: ./Dockerfile-dev
         container_name: zookeeper
         command: ./bin/zookeeper-server-start.sh config/zookeeper.properties
+        ports:
+            - 2181:2181
         expose:
             - 2181
 
