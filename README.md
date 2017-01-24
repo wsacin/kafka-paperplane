@@ -14,7 +14,7 @@ from kafka_paperplane import PaperPlane
 
 
 notifier = PaperPlane(
-        broker_address=my.broker.ip.addr:9092,
+        broker_address='my.broker.ip.addr:9092',
         receive_from=[],
             # List of topics to subscribe to.
             # [] if client will only send.
@@ -61,7 +61,7 @@ from kafka_paperplane.persistence import MongoStrategy
 
 
 notifier = PaperPlane(
-        broker_address=my.broker.ip.addr:9092,
+        broker_address='my.broker.ip.addr:9092',
         receive_from=['foo'],
         send_to=['bar'],
         database_strategy=MongoStrategy(),
