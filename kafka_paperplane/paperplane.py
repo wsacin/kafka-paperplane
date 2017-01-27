@@ -12,13 +12,15 @@ class PaperPlane(object):
     a notification system using Apache Kafka.
     """
     def __init__(
-            self, broker_address, receive_from,
-            send_to, group_id='', database_strategy=None):
-        self._broker_address = broker_address
-        self._send_to = send_to
+            self, bootstrap_servers, receive_from,
+            send_to, group_id='', auto_offset_reset='',
+            database_strategy=None):
+        self._auto_offset_reset = auto_offset_reset
+        self._bootstrap_servers = bootstrap_servers
+        self._database_strategy = database_strategy
         self._receive_from = receive_from
         self._group_id = group_id
-        self._database_strategy = database_strategy
+        self._send_to = send_to
         self._consumer = None
         self._producer = None
 
@@ -53,7 +55,9 @@ class PaperPlane(object):
         params = {}
         if self._group_id:
             params['group_id'] = self._group_id
-        params['bootstrap_servers'] = [self._broker_address]
+        if self._auto_offset_reset:
+            params['auto_offset_reset'] = self._auto_offset_reset
+        params['bootstrap_servers'] = self._bootstrap_servers
 
         if not self._consumer:
             self._consumer = KafkaConsumer(**params)
@@ -64,6 +68,6 @@ class PaperPlane(object):
     def producer(self):
         if not self._producer:
             self._producer = KafkaProducer(
-                    bootstrap_servers=[self._broker_address],
+                    bootstrap_servers=self._bootstrap_servers,
                 )
         return self._producer

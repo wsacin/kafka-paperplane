@@ -14,7 +14,7 @@ from kafka_paperplane import PaperPlane
 
 
 notifier = PaperPlane(
-        broker_address='my.broker.ip.addr:9092',
+        bootstrap_servers=['my.broker.ip.addr:9092', ...],
         receive_from=[],
             # List of topics to subscribe to.
             # [] if client will only send.
@@ -24,6 +24,9 @@ notifier = PaperPlane(
         group_id='',
             # (Optional) Notifiers with the the same id will receive
             # notifications in a round-robin manner.
+        auto_offset_reset='',
+            # (Optional) Set to 'earliest' to receive
+            # messages from offset=0, in case of old topic.
         database_strategy=None,
             # (Optional) Object that dictates what
             # storage backend which the notifications
@@ -68,5 +71,9 @@ notifier = PaperPlane(
             # MongoStrategy with default configuration. this
             # will create connections with a local instance
             # of MongoDB.
+            # params:
+            #   connection_url='localhost:27017'
+            #   database='paperplane'
+            #   collection='notifications'
     )
 ```
