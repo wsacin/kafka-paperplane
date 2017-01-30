@@ -3,7 +3,7 @@ from kafka import KafkaProducer, KafkaConsumer
 from .notification import Notification
 from datetime import datetime as dt
 from datetime import timezone as tz
-import json
+import yajl
 
 
 class PaperPlane(object):
@@ -26,7 +26,7 @@ class PaperPlane(object):
 
     def poll_notifications(self):
         for msg in self.consumer:
-            data = json.loads(msg.value.decode('utf-8'))
+            data = yajl.loads(msg.value.decode('utf-8'))
             data['offset'] = msg.offset
             if self._database_strategy:
                 data['timestamp'] = msg.timestamp

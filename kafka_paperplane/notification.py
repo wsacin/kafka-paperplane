@@ -1,6 +1,6 @@
 
 from .exceptions import ValidationError
-import json
+import yajl
 
 
 MSG_TYPE_CHOICES = {'ALERT', 'LOG', 'TASK', 'WARNING'}
@@ -25,5 +25,5 @@ class Notification(object):
             'message': msg,
             'message_type': msg_type,
         }
-        dump = json.dumps(payload)
+        dump = yajl.dumps(payload)
         return bytes(dump.encode('utf-8'))
