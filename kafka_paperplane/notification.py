@@ -3,7 +3,9 @@ from .exceptions import ValidationError
 import yajl
 
 
-MSG_TYPE_CHOICES = {'ALERT', 'LOG', 'TASK', 'WARNING'}
+MSG_TYPE_CHOICES = {
+    'ALERT', 'LOG', 'TASK', 'WARNING', 'COMMAND'
+}
 
 
 class Notification(object):
