@@ -39,8 +39,7 @@ class PaperPlane(object):
         for msg in self.consumer:
             yield msg
 
-    def send_notification(
-            self, message, message_type, topic=''):
+    def send_notification(self, message, message_type, topic=''):
 
         payload = Notification.create(message, message_type)
 
