@@ -37,7 +37,7 @@ notifier = PaperPlane(
 
 # Send notifications for registered topics.
 # Registered message types:
-#    ALERT, WARNING, TASK, LOG
+#    ALERT, WARNING, TASK, LOG, COMMAND
 notifier.send_notification('hello', 'ALERT')
 
 
@@ -63,8 +63,8 @@ from kafka_paperplane import PaperPlane
 from kafka_paperplane.persistence import MongoStrategy
 
 
-notifier = PaperPlane(
-        broker_address='my.broker.ip.addr:9092',
+receiver = PaperPlane(
+        bootstrap_servers=['my.broker.ip.addr:9092',],
         receive_from=['foo'],
         send_to=['bar'],
         database_strategy=MongoStrategy(),
