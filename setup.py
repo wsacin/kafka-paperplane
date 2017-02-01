@@ -13,7 +13,7 @@ setup(name='kafka-paperplane',
           'kafka_paperplane.persistence',
       ],
       install_requires=[
-          'yajl'
+          'yajl',
           'kafka-python',
           'pymongo',
           'redis',
