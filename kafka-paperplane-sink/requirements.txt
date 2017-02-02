@@ -1,0 +1,4 @@
+python-decouple
+honcho
+yajl
+-e git+https://github.com/wsacin/kafka-paperplane.git#egg=kafka-paperplane
