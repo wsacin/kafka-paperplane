@@ -37,6 +37,14 @@ class PaperPlane(object):
 
     def poll_raw_messages(self):
         for msg in self.consumer:
+            if self._database_strategy:
+                data = {
+                    'timestamp': dt.fromtimestamp(
+                        msg.timestamp / 1000, tz.utc),
+                    'offset': msg.offset,
+                    'message': msg.value
+                }
+                self._database_strategy.save_notification(data)
             yield msg
 
     def send_notification(self, message, message_type, topic=''):
