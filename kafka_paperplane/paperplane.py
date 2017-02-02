@@ -42,7 +42,7 @@ class PaperPlane(object):
                     'timestamp': dt.fromtimestamp(
                         msg.timestamp / 1000, tz.utc),
                     'offset': msg.offset,
-                    'message': msg.value
+                    'message': msg.value.decode('utf-8')
                 }
                 self._database_strategy.save_notification(data)
             yield msg
