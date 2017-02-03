@@ -1,5 +1,5 @@
 from .default import DefaultStrategy
-from redis import StrictRedis
+import redis
 
 
 class RedisStrategy(DefaultStrategy):
@@ -8,12 +8,12 @@ class RedisStrategy(DefaultStrategy):
         self._host = host
         self._port = port
         self._db = db
-        super().__init__()
+        self._connection = None
 
     @property
     def connection(self):
         if not self._connection:
-            self._connection = StrictRedis(
+            self._connection = redis.StrictRedis(
                     self._host, self._port, self._db)
         return self._connection
 

@@ -12,8 +12,7 @@ class MongoStrategy(DefaultStrategy):
         self._database_string = database
         self._collection = None
         self._database = None
-
-        super().__init__()
+        self._connection = None
         self._check_for_index()
 
     @property
