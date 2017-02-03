@@ -2,7 +2,6 @@
 from kafka import KafkaProducer, KafkaConsumer
 from .notification import Notification
 from datetime import datetime as dt
-from datetime import timezone as tz
 import yajl
 
 
@@ -31,16 +30,14 @@ class PaperPlane(object):
             if self._database_strategy:
                 data['timestamp'] = msg.timestamp
                 self._database_strategy.save_notification(data)
-            data['timestamp'] = dt.fromtimestamp(
-                    msg.timestamp / 1000, tz.utc)
+            data['timestamp'] = dt.fromtimestamp(msg.timestamp / 1000)
             yield data
 
     def poll_raw_messages(self):
         for msg in self.consumer:
             if self._database_strategy:
                 data = {
-                    'timestamp': dt.fromtimestamp(
-                        msg.timestamp / 1000, tz.utc),
+                    'timestamp': dt.fromtimestamp(msg.timestamp / 1000),
                     'offset': msg.offset,
                     'message': msg.value.decode('utf-8')
                 }
